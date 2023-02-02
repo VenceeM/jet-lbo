@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--LOGIN SELECTION-->
+    <dimen name="login_selection_box_padding_start">84dp</dimen>
+    <dimen name="login_selection_box_padding_end">84dp</dimen>
+    <dimen name="login_selection_box_padding_top">160dp</dimen>
+    <dimen name="login_selection_box_padding_bottom">52dp</dimen>
+    <dimen name="login_selection_button_height">45dp</dimen>
+    <dimen name="login_selection_button_padding_start">76dp</dimen>
+    <dimen name="login_selection_button_padding_end">76dp</dimen>
+    <dimen name="login_selection_button_spacer">12dp</dimen>
+
+    <!--LOGIN-->
+    <dimen name="login_box_padding_bottom">28dp</dimen>
+    <dimen name="login_box_padding_top">145dp</dimen>
+    <dimen name="login_input_height">50dp</dimen>
+    <dimen name="login_input_padding_start">76dp</dimen>
+    <dimen name="login_input_padding_end">76dp</dimen>
+    <dimen name="login_button_padding_start">76dp</dimen>
+    <dimen name="login_button_padding_end">76dp</dimen>
+
+
+</resources>

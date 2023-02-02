@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Lay bare App</string>
+    <string name="login">LOG IN</string>
+    <string name="register">REGISTER</string>
+    <string name="facebook">FACEBOOK</string>
+    <string name="guest">CONTINUE AS GUEST</string>
+    <string name="login_background_description">Login selection background</string>
+    <string name="login_laybare_logo">Laybare logo</string>
+</resources>
