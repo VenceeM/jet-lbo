@@ -57,7 +57,6 @@ dependencies {
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
 
-
     // For media playback using ExoPlayer
     implementation "androidx.media3:media3-exoplayer:$media3_version"
     // For building media playback UIs
@@ -87,6 +86,8 @@ dependencies {
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
+
 
     // Room
     implementation "androidx.room:room-runtime:$room_version"

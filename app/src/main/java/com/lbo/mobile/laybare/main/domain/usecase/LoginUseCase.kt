@@ -25,6 +25,8 @@ class LoginUseCase @Inject constructor(private val repository: LboRepository,pri
         }catch (e:HttpException){
             val error = errorBody.GetErrorBody(e,"message")
             emit(Resource.Error(message = error))
+        }catch (e:Exception){
+            emit(Resource.Error(message = "Sorry we are having a issue right now, please try again"))
         }
 
 
