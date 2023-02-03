@@ -2,16 +2,14 @@ package com.lbo.mobile.laybare.shared.navigation
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.lbo.mobile.laybare.main.presentation.screen.login.LoginScreen
 import com.lbo.mobile.laybare.main.presentation.screen.login_selection.LoginSelectionScreen
+import com.lbo.mobile.laybare.main.presentation.screen.register.RegisterScreen
 import com.lbo.mobile.laybare.main.presentation.screen.splash.SplashScreen
 import com.lbo.mobile.laybare.shared.navigation.navigation_item.NavigationItem
 
@@ -40,6 +38,14 @@ fun Navigation(navController:NavHostController){
             slideOutOfContainer(AnimatedContentScope.SlideDirection.Right, tween(300))
         }){
             LoginScreen(navController = navController)
+        }
+
+        composable(NavigationItem.REGISTER, enterTransition = {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.Left, animationSpec = tween(300))
+        }, exitTransition = {
+            slideOutOfContainer(AnimatedContentScope.SlideDirection.Right, animationSpec = tween(300))
+        }){
+            RegisterScreen(navController = navController)
         }
 
 
