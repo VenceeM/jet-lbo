@@ -3,12 +3,12 @@ package com.lbo.mobile.laybare.main.data.di
 import android.content.Context
 import androidx.room.Room
 import com.lbo.mobile.laybare.main.data.core.LaybareOnlineApi
-import com.lbo.mobile.laybare.main.data.database.Database
-import com.lbo.mobile.laybare.main.data.database.login.UserInformationDao
+import com.lbo.mobile.laybare.main.data.database.LaybareOnlineDatabase
+import com.lbo.mobile.laybare.main.data.database.user_information.UserInformationDao
 import com.lbo.mobile.laybare.main.data.repository.LboRepositoryImpl
+import com.lbo.mobile.laybare.main.data.repository.data_source.LocalDataSource
+import com.lbo.mobile.laybare.main.data.repository.data_source.RemoteDataSource
 import com.lbo.mobile.laybare.main.domain.repository.LboRepository
-import com.lbo.mobile.laybare.main.domain.usecase.LoginUseCase
-import com.lbo.mobile.laybare.main.domain.usecase.SaveUserUseCase
 import com.lbo.mobile.laybare.shared.util.Constants
 import com.lbo.mobile.laybare.shared.util.ErrorBody
 import dagger.Module
@@ -30,14 +30,14 @@ object AppModule {
     @Singleton
     fun provideDatabase(@ApplicationContext app: Context) = Room.databaseBuilder(
         context = app,
-        Database::class.java,
-        "user_info"
-    ).build()
+        LaybareOnlineDatabase::class.java,
+        "laybare_online_db"
+    ).fallbackToDestructiveMigration().build()
 
 
     @Provides
     @Singleton
-    fun provideUserInformationDao(database: Database):UserInformationDao{
+    fun provideUserInformationDao(database: LaybareOnlineDatabase):UserInformationDao{
         return database.userInfoDao()
     }
 
@@ -57,15 +57,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLaybareRepository(api: LaybareOnlineApi,userDao:UserInformationDao):LboRepository{
-        return LboRepositoryImpl(api,userDao)
+    fun provideLaybareRepository(localDataSource:LocalDataSource,remoteDataSource: RemoteDataSource):LboRepository{
+        return LboRepositoryImpl(localDataSource,remoteDataSource)
     }
-
 
     @Provides
     @Singleton
     fun provideErrorBody():ErrorBody{
-        return com.lbo.mobile.laybare.shared.util.ErrorBody()
+        return ErrorBody()
     }
 
 }

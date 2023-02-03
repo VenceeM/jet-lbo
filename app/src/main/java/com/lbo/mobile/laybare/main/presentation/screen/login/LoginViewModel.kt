@@ -6,29 +6,27 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lbo.mobile.laybare.main.data.database.login.UserInformation
+import com.lbo.mobile.laybare.main.domain.model.login.Customer
 import com.lbo.mobile.laybare.main.domain.model.login.LoginInfo
-import com.lbo.mobile.laybare.main.domain.usecase.DeleteAllUseCase
-import com.lbo.mobile.laybare.main.domain.usecase.LoginUseCase
-import com.lbo.mobile.laybare.main.domain.usecase.SaveUserUseCase
+import com.lbo.mobile.laybare.main.domain.usecase.db.DeleteAllUseCase
+import com.lbo.mobile.laybare.main.domain.usecase.login.LoginUseCase
+import com.lbo.mobile.laybare.main.domain.usecase.db.SaveUserUseCase
 import com.lbo.mobile.laybare.shared.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import okhttp3.RequestBody
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val saveUserUseCase: SaveUserUseCase,
-    private val deleteAllUseCase: DeleteAllUseCase):ViewModel() {
+    private val deleteAllUseCase: DeleteAllUseCase
+):ViewModel() {
 
     private val _state:MutableState<LoginState> = mutableStateOf(LoginState())
     val state: State<LoginState> = _state
-
 
     init {
         Log.d("VIEWMODELOF", "FROMVIEWMODEL OF LOGIN: OKAY")
@@ -57,9 +55,9 @@ class LoginViewModel @Inject constructor(
     }
 
 
-    fun saveUser(accessToken:String) = viewModelScope.launch {
-        val info = UserInformation(0, accessToken = accessToken)
-        saveUserUseCase.execute(info)
+    fun saveUser(customer: Customer) = viewModelScope.launch {
+
+        saveUserUseCase.execute(customer)
     }
 
     fun deleteAll() = viewModelScope.launch {

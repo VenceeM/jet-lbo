@@ -1,21 +1,17 @@
 package com.lbo.mobile.laybare.main.presentation.screen.login
 
-import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
@@ -28,19 +24,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.lbo.mobile.laybare.R
 import com.lbo.mobile.laybare.shared.components.BackButtonComponent
 import com.lbo.mobile.laybare.shared.components.ButtonComponent
-
 import com.lbo.mobile.laybare.shared.components.InputPasswordFieldComponent
 import com.lbo.mobile.laybare.shared.components.InputTextFieldComponent
 import com.lbo.mobile.laybare.shared.util.CustomLoadingDialog
@@ -57,7 +49,7 @@ fun LoginScreen(navController: NavController = rememberAnimatedNavController(), 
     var password by remember {
         mutableStateOf("")
     }
-    var type by remember {
+    val type by remember {
         mutableStateOf("email")
     }
     var unique by remember {
@@ -106,7 +98,7 @@ fun LoginScreen(navController: NavController = rememberAnimatedNavController(), 
                     start = dimensionResource(id = R.dimen.login_input_padding_start),
                     end = dimensionResource(id = R.dimen.login_input_padding_end)
                 )
-                .clip(RoundedCornerShape(7.dp)), text = unique, onValueChange = {value -> unique = value.toString()}, backgroundColor = 0xFF99FFFFFF, placeHolderColor = 0xFFFFFFFF,
+                .clip(RoundedCornerShape(7.dp)), text = unique, onValueChange = {value -> unique = value}, backgroundColor = 0xFF99FFFFFF, placeHolderColor = 0xFFFFFFFF,
                 textColor = 0xFFFFFFFF, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
                 keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(focusDirection = FocusDirection.Down)}),
                 fontSize = 16.sp, fontWeight = FontWeight.Bold
@@ -146,6 +138,8 @@ fun LoginScreen(navController: NavController = rememberAnimatedNavController(), 
                 description = "Logging In")
             }else if(state.login != null){
                 openDialog = false
+                loginViewModel.deleteAll()
+                loginViewModel.saveUser(state.login?.customer!!)
             } else if(state.message != null){
                 CustomLoadingDialog(openDialog = openDialog,onDismissRequest = {openDialog = false},
                     description = state.message!!, isLoading = false, isButtonVisible = true, onConfirm = {openDialog = false})

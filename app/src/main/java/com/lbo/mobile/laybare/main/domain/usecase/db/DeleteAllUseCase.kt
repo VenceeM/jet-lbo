@@ -1,4 +1,4 @@
-package com.lbo.mobile.laybare.main.domain.usecase
+package com.lbo.mobile.laybare.main.domain.usecase.db
 
 import com.lbo.mobile.laybare.main.domain.repository.LboRepository
 import javax.inject.Inject

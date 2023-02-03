@@ -1,9 +1,9 @@
 package com.lbo.mobile.laybare.main.data.di
 
 import com.lbo.mobile.laybare.main.domain.repository.LboRepository
-import com.lbo.mobile.laybare.main.domain.usecase.DeleteAllUseCase
-import com.lbo.mobile.laybare.main.domain.usecase.LoginUseCase
-import com.lbo.mobile.laybare.main.domain.usecase.SaveUserUseCase
+import com.lbo.mobile.laybare.main.domain.usecase.db.DeleteAllUseCase
+import com.lbo.mobile.laybare.main.domain.usecase.login.LoginUseCase
+import com.lbo.mobile.laybare.main.domain.usecase.db.SaveUserUseCase
 import com.lbo.mobile.laybare.shared.util.ErrorBody
 import dagger.Module
 import dagger.Provides
@@ -29,7 +29,7 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideDeleteAllUseCase(repository: LboRepository): DeleteAllUseCase{
+    fun provideDeleteAllUseCase(repository: LboRepository): DeleteAllUseCase {
         return DeleteAllUseCase(repository)
     }
 
