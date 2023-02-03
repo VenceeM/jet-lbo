@@ -31,10 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.lbo.mobile.laybare.R
-import com.lbo.mobile.laybare.shared.components.BackButtonComponent
-import com.lbo.mobile.laybare.shared.components.ButtonComponent
-import com.lbo.mobile.laybare.shared.components.InputPasswordFieldComponent
-import com.lbo.mobile.laybare.shared.components.InputTextFieldComponent
+import com.lbo.mobile.laybare.shared.components.*
 import com.lbo.mobile.laybare.shared.util.CustomLoadingDialog
 import com.lbo.mobile.laybare.shared.util.LOGIN_BUTTONS_COLOR
 
@@ -160,18 +157,5 @@ fun LoginScreen(navController: NavController = rememberAnimatedNavController(), 
 
         }
         
-    }
-}
-
-
-@Composable
-fun BackArrowButton(navController: NavController){
-    Column(modifier = Modifier.padding(top = 40.dp)) {
-        BackButtonComponent(modifier = Modifier
-            .height(25.dp)
-            .width(30.dp)
-            .padding(start = 5.dp), iconTint = LOGIN_BUTTONS_COLOR){
-            navController.popBackStack()
-        }
     }
 }
