@@ -3,19 +3,20 @@ package com.lbo.mobile.laybare.main.presentation.screen.login_selection
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Surface
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.lbo.mobile.laybare.R
 
 import com.lbo.mobile.laybare.shared.components.ButtonComponent
@@ -54,7 +55,7 @@ fun LoginSelectionScreen(navController: NavController = rememberAnimatedNavContr
                 .padding(
                     start = dimensionResource(id = R.dimen.login_selection_button_padding_start),
                     end = dimensionResource(id = R.dimen.login_selection_box_padding_end)
-                ),text = stringResource(id = R.string.login), color = LOGIN_BUTTONS_COLOR
+                ).clip(RoundedCornerShape(5.dp)),text = stringResource(id = R.string.login), color = LOGIN_BUTTONS_COLOR
             ){
                 navController.navigate(NavigationItem.LOGIN)
             }

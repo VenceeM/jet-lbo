@@ -2,7 +2,7 @@ package com.lbo.mobile.laybare.main.presentation.screen.splash
 
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.material.Surface
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier

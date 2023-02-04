@@ -1,15 +1,13 @@
 package com.lbo.mobile.laybare.shared.util
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,7 +20,7 @@ fun CustomLoadingDialog(modifier: Modifier = Modifier,onDismissRequest:()->Unit 
     onConfirm:()->Unit = {}){
 
     if(openDialog){
-        AlertDialog(modifier = modifier, contentColor = Color.White ,backgroundColor = Color(0xFF689D3A) ,shape = RoundedCornerShape(topStart = 50.dp, bottomEnd = 50.dp),
+        AlertDialog(modifier = modifier, textContentColor = Color.White ,containerColor = Color(0xFF689D3A) ,shape = RoundedCornerShape(topStart = 50.dp, bottomEnd = 50.dp),
             onDismissRequest = {onDismissRequest()},
             title = {
                 if(isLoading){
@@ -34,7 +32,7 @@ fun CustomLoadingDialog(modifier: Modifier = Modifier,onDismissRequest:()->Unit 
             text = {
                 Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                     Spacer(modifier = Modifier.padding(bottom = 5.dp))
-                    Text(text = description, style = MaterialTheme.typography.subtitle2, fontSize = 16.sp)
+                    Text(text = description, style = MaterialTheme.typography.labelMedium, fontSize = 16.sp)
                     Spacer(modifier = Modifier.padding(bottom = 5.dp))
                 }
             },

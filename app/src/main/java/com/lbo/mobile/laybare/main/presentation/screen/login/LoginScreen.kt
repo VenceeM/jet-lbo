@@ -7,9 +7,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -149,7 +149,7 @@ fun LoginScreen(navController: NavController = rememberAnimatedNavController(), 
                 Box(modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
                     .clickable { }){
-                    Text(modifier = Modifier.padding(start = 6.dp, end = 6.dp), text = "Forgot email or password?", fontSize = 15.sp, style = MaterialTheme.typography.caption,
+                    Text(modifier = Modifier.padding(start = 6.dp, end = 6.dp), text = "Forgot email or password?", fontSize = 15.sp, style = MaterialTheme.typography.labelMedium,
                         color = Color.White)
                 }
 

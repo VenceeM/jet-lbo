@@ -1,28 +1,24 @@
 package com.lbo.mobile.laybare.shared.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lbo.mobile.laybare.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun InputTextFieldComponent(modifier:Modifier = Modifier,text:String = "",onValueChange:(String)->Unit = {},label:String = "Email",
@@ -31,17 +27,15 @@ fun InputTextFieldComponent(modifier:Modifier = Modifier,text:String = "",onValu
     fontWeight: FontWeight = FontWeight.Normal,fontSize:TextUnit = 16.sp
 ){
 
-    val focusManager = LocalFocusManager.current
-
     TextField(modifier = modifier
-        .fillMaxWidth(),value = text, onValueChange = {  onValueChange(it.toString()) },
+        .fillMaxWidth(),value = text, onValueChange = {  onValueChange(it) },
         placeholder = {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
                 Text(text = placeholder, fontSize = 16.sp,
-                style = MaterialTheme.typography.body1, color = Color(placeHolderColor))
+                style = MaterialTheme.typography.bodyMedium, color = Color(placeHolderColor))
             }
         } ,
-        colors = TextFieldDefaults.textFieldColors(backgroundColor = Color(backgroundColor), focusedIndicatorColor = Color.Transparent,
+        colors = TextFieldDefaults.textFieldColors(containerColor = Color(backgroundColor), focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             textColor = Color(textColor)),
         textStyle = TextStyle(textDecoration = TextDecoration.None, fontWeight = fontWeight, fontSize = fontSize), keyboardOptions = keyboardOptions,
@@ -49,6 +43,7 @@ fun InputTextFieldComponent(modifier:Modifier = Modifier,text:String = "",onValu
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun InputPasswordFieldComponent(modifier:Modifier = Modifier,text:String = "",onValueChange: (String) -> Unit = {},label:String = "Email",
@@ -63,17 +58,15 @@ fun InputPasswordFieldComponent(modifier:Modifier = Modifier,text:String = "",on
         mutableStateOf(R.drawable.baseline_visibility_24)
     }
 
-    val focusManager = LocalFocusManager.current
-
     TextField(modifier = modifier
         .fillMaxWidth(),value = text, onValueChange = { onValueChange(it)},
         placeholder = {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
                 Text(text = placeholder, fontSize = 16.sp,
-                    style = MaterialTheme.typography.body1, color = Color(placeHolderColor))
+                    style = MaterialTheme.typography.bodyMedium, color = Color(placeHolderColor))
             }
         } ,
-        colors = TextFieldDefaults.textFieldColors(backgroundColor = Color(backgroundColor), focusedIndicatorColor = Color.Transparent,
+        colors = TextFieldDefaults.textFieldColors(containerColor = Color(backgroundColor), focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             textColor = Color(textColor)),
         textStyle = TextStyle(textDecoration = TextDecoration.None,fontWeight = fontWeight, fontSize = fontSize), keyboardOptions = keyboardOptions,
