@@ -5,5 +5,4 @@ sealed class LoginEvent{
     data class Password(val password:String):LoginEvent()
     object Login:LoginEvent()
 
-
 }
