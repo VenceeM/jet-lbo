@@ -13,8 +13,7 @@ import com.lbo.mobile.laybare.main.domain.usecase.login.LoginUseCase
 import com.lbo.mobile.laybare.main.domain.usecase.db.SaveUserUseCase
 import com.lbo.mobile.laybare.shared.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,38 +24,62 @@ class LoginViewModel @Inject constructor(
     private val deleteAllUseCase: DeleteAllUseCase
 ):ViewModel() {
 
+
     private val _state:MutableState<LoginState> = mutableStateOf(LoginState())
     val state: State<LoginState> = _state
 
     init {
-        Log.d("VIEWMODELOF", "FROMVIEWMODEL OF LOGIN: OKAY")
+
     }
 
-    fun login(password:String,type:String,unique:String){
+    private fun login(password:String,type:String,unique:String){
         val loginInfo = LoginInfo(
             password = password,
             type = type,
             unique = unique
         )
-        loginUseCase(loginInfo).onEach {result ->
-            when(result){
-                is Resource.Success -> {
-                    _state.value = LoginState(login = result.data)
-                }
-                is Resource.Error -> {
-                    _state.value = LoginState(message = result.message)
-                }
-                is Resource.Loading -> {
-                    _state.value = LoginState(loading = true)
+        viewModelScope.launch {
+            loginUseCase(loginInfo).collect{result ->
+                when(result){
+                    is Resource.Success -> {
+                        _state.value = LoginState(login = result.data)
+                    }
+                    is Resource.Error -> {
+                        _state.value = LoginState(message = result.message,emailOrPhone = state.value.emailOrPhone)
+                    }
+                    is Resource.Loading -> {
+                        _state.value = _state.value.copy(
+                            loading = true
+                        )
+                    }
                 }
             }
+        }
 
-        }.launchIn(viewModelScope)
     }
 
+    fun onEvent(event:LoginEvent){
+        when(event){
+            is LoginEvent.EmailOrPhone -> {
+                _state.value = _state.value.copy(
+                    emailOrPhone = event.emailOrPhone
+                )
+            }
+            is LoginEvent.Password -> {
+                _state.value = _state.value.copy(
+                    password = event.password
+                )
+            }
+            is LoginEvent.Login -> {
+                if(state.value.emailOrPhone != "" && state.value.password != ""){
+                    login(password = _state.value.password, type = "email", unique = _state.value.emailOrPhone)
+                }
+
+            }
+        }
+    }
 
     fun saveUser(customer: Customer) = viewModelScope.launch {
-
         saveUserUseCase.execute(customer)
     }
 
