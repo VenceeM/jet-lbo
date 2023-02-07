@@ -1,5 +1,6 @@
 package com.lbo.mobile.laybare.main.presentation.screen.login
 
+import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -34,6 +35,7 @@ import com.lbo.mobile.laybare.R
 import com.lbo.mobile.laybare.shared.components.*
 import com.lbo.mobile.laybare.shared.util.CustomLoadingDialog
 import com.lbo.mobile.laybare.shared.util.LOGIN_BUTTONS_COLOR
+import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalAnimationApi::class)
 @Preview
@@ -42,16 +44,6 @@ fun LoginScreen(navController: NavController = rememberAnimatedNavController(), 
     val focusManager = LocalFocusManager.current
     val state = loginViewModel.state.value
 
-
-    var password by remember {
-        mutableStateOf("")
-    }
-    val type by remember {
-        mutableStateOf("email")
-    }
-    var unique by remember {
-        mutableStateOf("")
-    }
     var openDialog by remember {
         mutableStateOf(false)
     }
@@ -95,7 +87,7 @@ fun LoginScreen(navController: NavController = rememberAnimatedNavController(), 
                     start = dimensionResource(id = R.dimen.login_input_padding_start),
                     end = dimensionResource(id = R.dimen.login_input_padding_end)
                 )
-                .clip(RoundedCornerShape(7.dp)), text = unique, onValueChange = {value -> unique = value}, backgroundColor = 0xFF99FFFFFF, placeHolderColor = 0xFFFFFFFF,
+                .clip(RoundedCornerShape(7.dp)), text = state.emailOrPhone, onValueChange = {value -> loginViewModel.onEvent(LoginEvent.EmailOrPhone(value))}, backgroundColor = 0xFF99FFFFFF, placeHolderColor = 0xFFFFFFFF,
                 textColor = 0xFFFFFFFF, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
                 keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(focusDirection = FocusDirection.Down)}),
                 fontSize = 16.sp, fontWeight = FontWeight.Bold
@@ -110,7 +102,7 @@ fun LoginScreen(navController: NavController = rememberAnimatedNavController(), 
                     start = dimensionResource(id = R.dimen.login_input_padding_start),
                     end = dimensionResource(id = R.dimen.login_input_padding_end)
                 )
-                .clip(RoundedCornerShape(7.dp)), text = password, onValueChange = {value -> password = value}, backgroundColor = 0xFF99FFFFFF, placeHolderColor = 0xFFFFFFFF, placeholder = "Password",
+                .clip(RoundedCornerShape(7.dp)), text = state.password, onValueChange = {value -> loginViewModel.onEvent(LoginEvent.Password(value))}, backgroundColor = 0xFF99FFFFFF, placeHolderColor = 0xFFFFFFFF, placeholder = "Password",
                 textColor = 0xFFFFFFFF,fontSize = 16.sp, fontWeight = FontWeight.Bold,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = {
@@ -125,11 +117,16 @@ fun LoginScreen(navController: NavController = rememberAnimatedNavController(), 
                 start = dimensionResource(id = R.dimen.login_button_padding_start),
                 end = dimensionResource(id = R.dimen.login_button_padding_end)),
                 text = "LOG IN", color = LOGIN_BUTTONS_COLOR, height = 45.dp){
-                loginViewModel.login(password = password,type = type,unique = unique)
+
+                // NEW
+                loginViewModel.onEvent(LoginEvent.Login)
+
+                // OLD
+                //loginViewModel.login(password = password,type = type,unique = unique)
 
             }
 
-            if(state.loading == true){
+            if(state.loading){
                 openDialog = true
                 CustomLoadingDialog(openDialog = openDialog,onDismissRequest = {openDialog = false},
                 description = "Logging In")
