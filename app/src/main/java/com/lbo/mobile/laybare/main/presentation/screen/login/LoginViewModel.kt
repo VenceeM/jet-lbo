@@ -28,9 +28,6 @@ class LoginViewModel @Inject constructor(
     private val _state:MutableState<LoginState> = mutableStateOf(LoginState())
     val state: State<LoginState> = _state
 
-    init {
-
-    }
 
     private fun login(password:String,type:String,unique:String){
         val loginInfo = LoginInfo(
@@ -42,7 +39,10 @@ class LoginViewModel @Inject constructor(
             loginUseCase(loginInfo).collect{result ->
                 when(result){
                     is Resource.Success -> {
+                        deleteAll()
                         _state.value = LoginState(login = result.data)
+                        saveUser(customer = result.data!!.customer)
+
                     }
                     is Resource.Error -> {
                         _state.value = LoginState(message = result.message,emailOrPhone = state.value.emailOrPhone)
@@ -79,11 +79,11 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun saveUser(customer: Customer) = viewModelScope.launch {
+    private fun saveUser(customer: Customer) = viewModelScope.launch {
         saveUserUseCase.execute(customer)
     }
 
-    fun deleteAll() = viewModelScope.launch {
+    private fun deleteAll() = viewModelScope.launch {
         deleteAllUseCase.execute()
     }
 

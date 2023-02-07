@@ -132,8 +132,6 @@ fun LoginScreen(navController: NavController = rememberAnimatedNavController(), 
                 description = "Logging In")
             }else if(state.login != null){
                 openDialog = false
-                loginViewModel.deleteAll()
-                loginViewModel.saveUser(state.login?.customer!!)
             } else if(state.message != null){
                 CustomLoadingDialog(openDialog = openDialog,onDismissRequest = {openDialog = false},
                     description = state.message!!, isLoading = false, isButtonVisible = true, onConfirm = {openDialog = false})
